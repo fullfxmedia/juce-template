@@ -13,3 +13,31 @@ juce_add_plugin(${PROJECT_NAME}
     PRODUCT_NAME "AudioPluginTemplate"
     BUNDLE_ID "com.fullfxmedia.audioplugintemplate"
 )
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        source/PluginEditor.cpp
+        source/PluginProcessor.cpp
+)
+
+target_include_directories(${PROJECT_NAME}
+    PRIVATE
+        include
+)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        juce::juce_audio_utils
+    PUBLIC
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        juce::juce_recommended_warning_flags
+)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+        JUCE_WEB_BROWSER=0
+        JUCE_USE_CURL=0
+        JUCE_VST3_CAN_REPLACE_VST2=0
+        JUCE_PLUGINHOST_VST=0
+)
