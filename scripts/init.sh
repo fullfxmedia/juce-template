@@ -13,14 +13,14 @@ TEMPLATE_FULL_NAME="AudioPluginTemplate"
 
 for target in "$OLD_FULL_NAME" "$OLD_NAME"; do
     # Directory renaming
-    find . -depth -type d -name "*$target*" | while read -r dir; do
+    find . -path ./.git -prune -o -depth -type d -name "*$target*" -print | while read -r dir; do
         new_dir=$(echo "$dir" | sed "s/$target/$TARGET_NAME/g")
         mv "$dir" "$new_dir"
     done
 
     # File renaming
-    find . -type f -name "*$target*" | while read -r file; do
-        new_file=$(echo "$file" | sed "s/$target/$NEW_NAME/g")
+    find . -path ./.git -prune -o -type f -name "*$target*" -print | while read -r file; do
+        new_file=$(echo "$file" | sed "s/$target/$TARGET_NAME/g")
         mv "$file" "$new_file"
     done
 done
