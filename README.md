@@ -2,10 +2,16 @@
 
 ## CMake
 
-Configure:
+### Configure
+
+OSX Apple Silicon
+
+> cmake -S . -B build -DBUILD_STANDALONE=ON -DCMAKE_OSX_ARCHITECTURES=arm64
+
+Linux/Windows
 
 > cmake -S . -B build
 
-Build:
+### Build
 
-> cmake --build build
+> cmake --build build --config Release
