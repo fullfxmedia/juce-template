@@ -1,4 +1,16 @@
-# Plugin Tempalte
+# AudioPluginTemplate
+
+## Cloning
+
+This repository can be cloned for a new starting point for a JUCE audio plugin project
+
+```
+git clone git@github.com:fullfxmedia/juce-template.git new-plugin
+cd new-plugin
+./init.sh NewPlugin
+git remote rm origin
+git remote add origin <new repo url>
+```
 
 ## CMake
 
