@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 4.0.2)
 
-project(PluginTemplate)
+project(AudioPluginTemplate)
 
 set(CMAKE_CXX_STANDARD 23)
 

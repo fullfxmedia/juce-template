@@ -7,7 +7,7 @@ This repository can be cloned for a new starting point for a JUCE audio plugin p
 ```
 git clone git@github.com:fullfxmedia/juce-template.git new-plugin
 cd new-plugin
-./init.sh NewPlugin
+./scripts/init.sh NewPlugin
 git remote rm origin
 git remote add origin <new repo url>
 ```
