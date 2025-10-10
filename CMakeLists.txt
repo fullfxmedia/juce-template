@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 4.0.2)
+cmake_minimum_required(VERSION 3.26)
 
-project(AudioPluginTemplate)
+project(AudioPluginTemplate VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 include(cmake/cpm.cmake)
@@ -18,7 +20,7 @@ CPMAddPackage(
 if (MSVC)
     add_compile_options(/Wall /WX)
 else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 endif()
 
 add_subdirectory(plugin)
