@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 4.0.2)
+cmake_minimum_required(VERSION 3.26)
 
-project(AudioPluginTemplate VERSION 0.1.0)
+project(AudioPluginTemplate VERSION 0.0.1 LANGUAGES C CXX)
 
 option(BUILD_STANDALONE "Build standalone plugin format" OFF)
 set(plugin_formats AU VST3)
@@ -21,10 +21,22 @@ juce_add_plugin(${PROJECT_NAME}
     COPY_PLUGIN_AFTER_BUILD TRUE
 )
 
+set(plugin_sources
+    source/PluginEditor.cpp
+    source/PluginProcessor.cpp
+)
+
+set(plugin_headers
+    include/AudioPluginTemplate/PluginEditor.h
+    include/AudioPluginTemplate/PluginProcessor.h
+)
+
+juce_generate_juce_header(${PROJECT_NAME})
+
 target_sources(${PROJECT_NAME}
     PRIVATE
-        source/PluginEditor.cpp
-        source/PluginProcessor.cpp
+        ${plugin_sources}
+        ${plugin_headers}
 )
 
 target_include_directories(${PROJECT_NAME}
