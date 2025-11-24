@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.26)
 
 project(AudioPluginTemplate VERSION 0.0.1 LANGUAGES C CXX)
 
-option(BUILD_STANDALONE "Build standalone plugin format" OFF)
+option(BUILD_STANDALONE "Build standalone plugin format" ON)
+
 set(plugin_formats AU VST3)
 if(BUILD_STANDALONE)
     list(APPEND plugin_formats Standalone)
