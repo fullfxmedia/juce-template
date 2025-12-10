@@ -4,18 +4,22 @@
 
 TARGET="$1"
 
-# Rename content in text files
-find . -type f -not -path "./.git/*" -exec grep -l "AudioPlugin" {} + 2>/dev/null | \
-while read file; do
-    sed -i.bak "s/AudioPluginTemplate/$TARGET/g; s/AudioPlugin/$TARGET/g" "$file"
-    rm "$file.bak"
-done
+# Case-insensitive replace in files
+find . -type f -not -path "./.git/*" -exec sed -i.bak \
+    -e "s/AudioPluginTemplate/$TARGET/gI" \
+    -e "s/AudioPlugin/$TARGET/gI" {} +
 
-# Rename files and directories (deepest first)
-find . -depth -not -path "./.git/*" \( -name "*AudioPlugin*" -o -name "*AudioPluginTemplate*" \) | \
+find . -type f -name "*.bak" -delete
+
+# Rename files and directories (case-insensitive)
+find . -depth -not -path "./.git/*" | \
 while read path; do
-    new_path=$(echo "$path" | sed "s/AudioPluginTemplate/$TARGET/g; s/AudioPlugin/$TARGET/g")
-    [ "$path" != "$new_path" ] && mv "$path" "$new_path"
+    new_path=$(echo "$path" |
+        sed -e "s/AudioPluginTemplate/$TARGET/gI" \
+            -e "s/AudioPlugin/$TARGET/gI")
+    if [ "$path" != "$new_path" ]; then
+        mv "$path" "$new_path"
+    fi
 done
 
-echo "Renamed AudioPlugin* to $TARGET"
+echo "Renamed AudioPlugin* (all case variants) to $TARGET"

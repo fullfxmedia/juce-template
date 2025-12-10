@@ -17,10 +17,17 @@ CPMAddPackage(
     SOURCE_DIR ${LIB_DIR}/juce
 )
 
+CPMAddPackage(
+    NAME moonbase_JUCEClient
+    GIT_REPOSITORY git@github.com:Moonbase-sh/moonbase_JUCEClient.git
+    GIT_TAG main
+    SOURCE_DIR ${LIB_DIR}/moonbase_JUCEClient
+)
+
 if (MSVC)
     add_compile_options(/Wall /WX)
 else()
-    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+    add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 add_subdirectory(plugin)

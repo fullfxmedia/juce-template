@@ -22,14 +22,41 @@ juce_add_plugin(${PROJECT_NAME}
     COPY_PLUGIN_AFTER_BUILD TRUE
 )
 
-set(plugin_sources
-    source/PluginEditor.cpp
-    source/PluginProcessor.cpp
+file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
+        source/*.cpp
 )
 
-set(plugin_headers
-    include/AudioPluginTemplate/PluginEditor.h
-    include/AudioPluginTemplate/PluginProcessor.h
+# Resources
+file(GLOB RESOURCE_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/resources/*"
+)
+juce_add_binary_data(BinaryData
+    SOURCES ${RESOURCE_FILES}
+)
+
+# Moonbase
+juce_add_binary_data(MoonbaseConfig
+    SOURCES resources/moonbase_api_config.json
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE BinaryData)
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        ${PROJECT_SOURCES}
+)
+
+get_target_property(juce_generated_code_dir ${PROJECT_NAME} JUCE_GENERATED_SOURCES_DIRECTORY)
+if(NOT juce_generated_code_dir)
+    message(FATAL_ERROR "Failed to locate JUCE generated sources for target ${PROJECT_NAME}")
+endif()
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${juce_generated_code_dir}
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 juce_generate_juce_header(${PROJECT_NAME})
@@ -51,6 +78,8 @@ target_link_libraries(${PROJECT_NAME}
         juce::juce_graphics
         juce::juce_gui_basics
         juce::juce_audio_utils
+        #juce::juce_dsp
+        moonbase_JUCEClient
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
