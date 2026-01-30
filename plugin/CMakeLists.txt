@@ -1,10 +1,20 @@
 cmake_minimum_required(VERSION 3.26)
 
-project(AudioPluginTemplate VERSION 0.0.1 LANGUAGES C CXX)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "Runtime Library")
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13 CACHE STRING "Build for 10.13")
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(BUILD_STANDALONE "Build standalone plugin format" ON)
 
-set(plugin_formats AU VST3)
+if(DEFINED ENV{VERSION})
+    set(PROJECT_VERSION $ENV{VERSION})
+else()
+    set(PROJECT_VERSION "0.0.1")
+endif()
+
+project(AudioPluginTemplate VERSION ${PROJECT_VERSION})
+
+set(plugin_formats AU VST3 LV2)
 if(BUILD_STANDALONE)
     list(APPEND plugin_formats Standalone)
 endif()
@@ -14,11 +24,12 @@ juce_add_plugin(${PROJECT_NAME}
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
-    PLUGIN_MANUFACTURER_CODE "FUXM"
-    PLUGIN_CODE "AUXT"
+    PLUGIN_MANUFACTURER_CODE FFXM
+    PLUGIN_CODE AUXT
     FORMATS ${plugin_formats}
     PRODUCT_NAME "AudioPluginTemplate"
     BUNDLE_ID "com.fullfxmedia.audioplugintemplate"
+    LV2URI "https://fullfxmedia.com/plugins/audioplugintemplate"
     COPY_PLUGIN_AFTER_BUILD TRUE
 )
 
@@ -95,5 +106,6 @@ target_compile_definitions(${PROJECT_NAME}
 )
 
 if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum macOS deployment version" FORCE)
     target_compile_definitions(${PROJECT_NAME} PUBLIC JUCE_AU=1)
 endif()
