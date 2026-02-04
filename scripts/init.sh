@@ -25,7 +25,7 @@ find . -type f -not -path "./.git/*" -exec sed -i.bak \
   -e "s/AudioPluginTemplate/$TARGET/gI" \
   -e "s/AudioPlugin/$TARGET/gI" \
   -e "s/audioplugintemplate/$TARGET_LOWER/gI" \
-  -e "s/PLUGIN_CODE/$PLUGIN_CODE/gI" \
+  -e "s/AudioPluginTemplateCode/$PLUGIN_CODE/gI" \
   {} +
 
 find . -type f -name "*.bak" -delete

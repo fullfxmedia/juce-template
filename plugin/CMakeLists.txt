@@ -25,7 +25,7 @@ juce_add_plugin(${PROJECT_NAME}
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     PLUGIN_MANUFACTURER_CODE FFXM
-    PLUGIN_CODE PLUGIN_CODE
+    PLUGIN_CODE AudioPluginTemplateCode
     FORMATS ${plugin_formats}
     PRODUCT_NAME "AudioPluginTemplate"
     BUNDLE_ID "com.fullfxmedia.audioplugintemplate"
