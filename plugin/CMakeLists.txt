@@ -20,7 +20,7 @@ if(BUILD_STANDALONE)
 endif()
 
 juce_add_plugin(${PROJECT_NAME}
-    COMPANY_NAME FullFXMedia
+    COMPANY_NAME "Full FX Media"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
@@ -31,6 +31,12 @@ juce_add_plugin(${PROJECT_NAME}
     BUNDLE_ID "com.fullfxmedia.audioplugintemplate"
     LV2URI "https://fullfxmedia.com/plugins/audioplugintemplate"
     COPY_PLUGIN_AFTER_BUILD TRUE
+)
+
+clap_juce_extensions_plugin(
+    TARGET ${PROJECT_NAME}
+    CLAP_ID "com.fullfxmedia.audioplugintemplate"
+    CLAP_FEATURES instrument "synthesizer"
 )
 
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS

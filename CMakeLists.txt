@@ -24,6 +24,14 @@ CPMAddPackage(
     SOURCE_DIR ${LIB_DIR}/moonbase_JUCEClient
 )
 
+set(CLAP_JUCE_EXT_COMMIT 02f91b7)
+CPMAddPackage(
+    NAME ClapJuceExtensions
+    VERSION 0.0.0-${CLAP_JUCE_EXT_COMMIT}
+    GITHUB_REPOSITORY free-audio/clap-juce-extensions
+    GIT_TAG ${CLAP_JUCE_EXT_COMMIT}
+)
+
 if (MSVC)
     add_compile_options(/Wall)
 else()
